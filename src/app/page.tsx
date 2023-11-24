@@ -24,6 +24,7 @@ const Home = () => {
   const [url, setUrl] = useState<string>('')
   const [isValidImage, setIsValidImage] = useState<boolean>(false)
   const [mode, setMode] = useState<number>(1)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const [response, setResponse] = useState<string[]>()
   const [extractText, setExtractText] = useState<string>('');
@@ -35,6 +36,7 @@ const Home = () => {
     setResponse([])
     setExtractText('')
     setFaceDetect([])
+    setIsLoading(true)
     if (mode == 1) {
       try {
         const res = await API.get(`/logo?url=${url}`)
@@ -50,6 +52,8 @@ const Home = () => {
           duration: 3000
         })
         return
+      } finally {
+        setIsLoading(false)
       }
     }
     if (mode == 2) {
@@ -66,6 +70,8 @@ const Home = () => {
           duration: 3000
         })
         return
+      } finally {
+        setIsLoading(false)
       }
     }
     if (mode == 3) {
@@ -83,6 +89,8 @@ const Home = () => {
           duration: 3000
         })
         return
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -136,6 +144,7 @@ const Home = () => {
             backgroundColor='primary'
             color='white'
             isDisabled={!isValidImage ? true : false}
+            isLoading={isLoading}
             _hover={{
               backgroundColor: 'secondary'
             }}
